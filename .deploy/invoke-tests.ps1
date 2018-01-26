@@ -1,3 +1,4 @@
+#!/usr/bin/env pwsh
 if($PSCommandPath -eq $null) {
 	$CommandRootPath = (Split-Path -Parent $MyInvocation.MyCommand.Path);
 } else {
