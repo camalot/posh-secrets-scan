@@ -36,7 +36,7 @@ Set-Location -Path $testsDir | Out-Null;
 
 $psModuleFiles = "$scriptDir${PathSeparator}*.ps*1";
 
-$tests = (Get-ChildItem -Path "$testsDir${PathSeparator}*.Tests.ps1" | % { $_.FullName });
+$tests = (Get-ChildItem -Path "$testsDir${PathSeparator}*.tests.ps1" | % { $_.FullName });
 Write-Host "tests: $tests";
 $coverageFiles = (Get-ChildItem -Path "$psModuleFiles") | where { $_.Name -inotmatch "${PathSeparator}.tests${PathSeparator}.ps1$" `
         -and $_.Name -inotmatch "${PathSeparator}.psd1$" } | % { $_.FullName };
