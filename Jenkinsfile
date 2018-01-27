@@ -41,16 +41,13 @@ node ("powershell") {
 					Pipeline.install(this)
 				}
 				stage ("build") {
-					sh script: "${WORKSPACE}/.deploy/build.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'"
+					Powershell.run(this, script: "${WORKSPACE}/.deploy/build.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'")
 				}
 				stage ("test") {
-					withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: env.CI_ARTIFACTORY_CREDENTIAL_ID,
-													usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
-						sh script: "${WORKSPACE}/.deploy/test.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'"
-					}
+					Powershell.run(this, script: "${WORKSPACE}/.deploy/test.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'")
 				}
 				stage ("deploy") {
-						sh script: "${WORKSPACE}/.deploy/deploy.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}'"
+					Powershell.run(this, script: "${WORKSPACE}/.deploy/deploy.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}'")
 				}
 				stage ('publish') {
 					// this only will publish if the incominh branch IS develop
