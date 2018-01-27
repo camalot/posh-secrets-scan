@@ -41,14 +41,14 @@ node ("powershell") {
 					Pipeline.install(this)
 				}
 				stage ("build") {
-					Powershell.run(sender: this, xxx: "Get-ChildItems -Path ${WORKSPACE}")
-					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/build.ps1")
+					Powershell.run(this, "Get-ChildItems -Path ${WORKSPACE}", null)
+					Powershell.run(this, null, "${WORKSPACE}/.deploy/build.ps1")
 				}
 				stage ("test") {
-					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/test.ps1")
+					Powershell.run(this, null, "${WORKSPACE}/.deploy/test.ps1")
 				}
 				stage ("deploy") {
-					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/deploy.ps1")
+					Powershell.run(this, null, "${WORKSPACE}/.deploy/deploy.ps1")
 				}
 				stage ('publish') {
 					// this only will publish if the incominh branch IS develop
