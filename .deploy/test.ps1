@@ -1,16 +1,16 @@
 #!/usr/bin/env pwsh
 
 if ($PSCommandPath -eq $null) {
-    $CommandRootPath = (Split-Path -Parent $MyInvocation.MyCommand.Path);
+	$CommandRootPath = (Split-Path -Parent $MyInvocation.MyCommand.Path);
 }
 else {
-    $CommandRootPath = (Split-Path -Parent $PSCommandPath);
+	$CommandRootPath = (Split-Path -Parent $PSCommandPath);
 }
 
 $isCI = $ENV:CI -cmatch '[Tt]rue';
 
 if (-not (Get-Module -ListAvailable -Name "pester")) {
-    Install-Module -Name "pester";
+	Install-Module -Name "pester" -Scope CurrentUser -Force -AcceptLicense;
 }
 
 Import-Module "pester" -Verbose -Force;
@@ -23,7 +23,7 @@ $scriptDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..\" -Resolve);
 $outDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..\bin\");
 
 if ( !(Test-Path -Path $outDir) ) {
-    New-Item -ItemType "directory" -Path $outDir | Out-Null;
+	New-Item -ItemType "directory" -Path $outDir | Out-Null;
 }
 
 Set-Location -Path $testsDir | Out-Null;
