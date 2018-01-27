@@ -7,6 +7,8 @@ else {
 	$CommandRootPath = (Split-Path -Parent $PSCommandPath);
 }
 
+$PathSeparator = [IO.Path]::DirectorySeparatorChar;
+
 $isCI = $ENV:CI -cmatch '[Tt]rue';
 
 if (-not (Get-Module -ListAvailable -Name "pester")) {
@@ -17,10 +19,10 @@ Import-Module "pester" -Verbose -Force;
 $cdir = $PWD;
 
 
-$testsDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..\tests" -Resolve);
-$scriptDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..\" -Resolve);
+$testsDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..${PathSeparator}tests" -Resolve);
+$scriptDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..${PathSeparator}" -Resolve);
 
-$outDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..\bin\");
+$outDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..${PathSeparator}bin${PathSeparator}");
 
 if ( !(Test-Path -Path $outDir) ) {
 	New-Item -ItemType "directory" -Path $outDir | Out-Null;
@@ -28,10 +30,11 @@ if ( !(Test-Path -Path $outDir) ) {
 
 Set-Location -Path $testsDir | Out-Null;
 
-$psModuleFiles = "$scriptDir\*.ps*1";
+$psModuleFiles = "$scriptDir${PathSeparator}*.ps*1";
 
-$tests = (Get-ChildItem -Path "$testsDir\*.Tests.ps1" | % { $_.FullName });
-$coverageFiles = (Get-ChildItem -Path "$psModuleFiles") | where { $_.Name -inotmatch "\.tests\.ps1$" -and $_.Name -inotmatch "\.psd1$" } | % { $_.FullName };
+$tests = (Get-ChildItem -Path "$testsDir${PathSeparator}*.Tests.ps1" | % { $_.FullName });
+$coverageFiles = (Get-ChildItem -Path "$psModuleFiles") | where { $_.Name -inotmatch "${PathSeparator}.tests${PathSeparator}.ps1$" `
+        -and $_.Name -inotmatch "${PathSeparator}.psd1$" } | % { $_.FullName };
 $resultsOutput = (Join-Path -Path $outDir -ChildPath "secrets-scan.results.xml");
 
 Invoke-Pester -Script $tests -OutputFormat NUnitXml -OutputFile $resultsOutput -CodeCoverage $coverageFiles -Strict -EnableExit:$isCI;
