@@ -25,14 +25,16 @@ Describe "Initialize-SecretScan" {
 
 			Write-Host "jsonFileName: $jsonFileName"
 			Mock Invoke-WebRequest {
+				"Mock Request to get script file" | Write-Host;
 				Set-Content -Path "$ssFileName" -Value $ssFile;
 				} -ParameterFilter { $OutFile -and $OutFile -eq $ssFileName };
 			Mock Invoke-WebRequest {
+				"Mock Request to get data file" | Write-Host;
 				Set-Content -Path "$jsonFileName" -Value $jsonFile;
 			} -ParameterFilter { $OutFile -and $OutFile -eq $jsonFileName };
 			# Setup was not working for some reason
 			New-Item -Path "$TestDrive\scripts" -ItemType Directory -Force  | Out-Null;
-			$destPath = "$TestDrive\scripts";
+
 			{ Initialize-SecretScan -Path "$TestDrive\scripts" } | Should Not Throw;
 			$ssFileName | Should Exist;
 			$jsonFileName | Should Exist;
