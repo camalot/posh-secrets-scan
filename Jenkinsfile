@@ -41,7 +41,7 @@ node ("powershell") {
 					Pipeline.install(this)
 				}
 				stage ("build") {
-					Powershell.run(this, "Get-ChildItem!hype -Path ${WORKSPACE}", null)
+					Powershell.run(this, "Get-ChildItem -Path ${WORKSPACE}", null)
 					Powershell.run(this, null, "${WORKSPACE}/.deploy/build.ps1", "-ProjectName ${env.CI_PROJECT_NAME}")
 				}
 				stage ("test") {
