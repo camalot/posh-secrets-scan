@@ -37,7 +37,7 @@ node ("powershell") {
 			try {
 				stage ("install" ) {
 					deleteDir()
-					Branch.checkout_vsts(this, teamName, env.CI_PROJECT_NAME)
+					Branch.checkout(this, env.CI_PROJECT_NAME)
 					Pipeline.install(this)
 				}
 				stage ("build") {
