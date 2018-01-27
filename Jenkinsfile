@@ -41,6 +41,7 @@ node ("powershell") {
 					Pipeline.install(this)
 				}
 				stage ("build") {
+					Powershell.run(sender: this, xxx: "Get-ChildItems -Path ${WORKSPACE}")
 					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/build.ps1")
 				}
 				stage ("test") {
