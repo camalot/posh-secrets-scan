@@ -1,3 +1,9 @@
 #!/usr/bin/env pwsh
 
-Write-Debug "Running Build...";
+param(
+	[Parameter(Mandatory = $true)]
+	[String]
+	$ProjectName
+)
+
+"Running $ProjectName Build..." | Write-Debug;
