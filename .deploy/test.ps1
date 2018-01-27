@@ -8,6 +8,9 @@ else {
 }
 
 $PathSeparator = [IO.Path]::DirectorySeparatorChar;
+Write-Host "Path Separator: $PathSeparator";
+Write-Host "CommandRootPath: $CommandRootPath";
+Write-Host "PSCommandPath: $PSCommandPath";
 
 $isCI = $ENV:CI -cmatch '[Tt]rue';
 
