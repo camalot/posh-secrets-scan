@@ -6,4 +6,4 @@ param(
 	$ProjectName
 )
 
-"Running $ProjectName Build..." | Write-Debug;
+"Running $ProjectName Build..." | Write-Host;

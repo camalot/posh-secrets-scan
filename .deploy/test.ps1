@@ -1,3 +1,3 @@
 #!/usr/bin/env pwsh
 
-Write-Debug "Running Tests...";
+Write-Host "Running Tests...";
