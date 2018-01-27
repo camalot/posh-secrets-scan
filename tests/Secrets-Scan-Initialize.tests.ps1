@@ -22,6 +22,8 @@ Describe "Initialize-SecretScan" {
 			$ssFile = "dummy content";
 			$jsonFileName = "$TestDrive\scripts\.secrets-scan.json";
 			$jsonFile = "{ `"patterns`" : [ `"dummy-regex`" ]}";
+
+			Write-Host "jsonFileName: $jsonFileName"
 			Mock Invoke-WebRequest {
 				Set-Content -Path "$ssFileName" -Value $ssFile;
 				} -ParameterFilter { $OutFile -and $OutFile -eq $ssFileName };

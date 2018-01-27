@@ -212,6 +212,7 @@ Describe "Scan-Path" {
 
 	Context "When has commit history" {
 		It "Must scan the commit history" {
+
 			$historyFile = "repo\some-file.txt";
 			Mock Write-Violations {};
 			Mock Test-Path { return $true; } -ParameterFilter { $Path -eq "$TestDrive\$historyFile" };
