@@ -30,12 +30,14 @@ $outDir = (Join-Path -Path "$CommandRootPath" -ChildPath "..${PathSeparator}bin$
 if ( !(Test-Path -Path $outDir) ) {
 	New-Item -ItemType "directory" -Path $outDir | Out-Null;
 }
+Write-Host "testsDir: $testsDir";
 
 Set-Location -Path $testsDir | Out-Null;
 
 $psModuleFiles = "$scriptDir${PathSeparator}*.ps*1";
 
 $tests = (Get-ChildItem -Path "$testsDir${PathSeparator}*.Tests.ps1" | % { $_.FullName });
+Write-Host "tests: $tests";
 $coverageFiles = (Get-ChildItem -Path "$psModuleFiles") | where { $_.Name -inotmatch "${PathSeparator}.tests${PathSeparator}.ps1$" `
         -and $_.Name -inotmatch "${PathSeparator}.psd1$" } | % { $_.FullName };
 $resultsOutput = (Join-Path -Path $outDir -ChildPath "secrets-scan.results.xml");
