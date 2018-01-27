@@ -21,7 +21,9 @@ function Initialize-SecretScan {
 	process {
 		try {
 			Invoke-WebRequest -Uri $configFileUrl -OutFile $configFileOutput;
+			Get-Content -Path $configFileOutput | Write-Host;
 			Invoke-WebRequest -Uri $mainFileUrl -OutFile $mainFileOutput;
+			Get-Content -Path $mainFileOutput | Write-Host;
 		} catch {
 			$_ | Write-Warning;
 		}
