@@ -41,13 +41,13 @@ node ("powershell") {
 					Pipeline.install(this)
 				}
 				stage ("build") {
-					Powershell.run(this, file: "${WORKSPACE}/.deploy/build.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'")
+					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/build.ps1")
 				}
 				stage ("test") {
-					Powershell.run(this, file: "${WORKSPACE}/.deploy/test.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}' -o '${env.CI_DOCKER_ORGANIZATION}'")
+					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/test.ps1")
 				}
 				stage ("deploy") {
-					Powershell.run(this, file: "${WORKSPACE}/.deploy/deploy.ps1 -n '${env.CI_PROJECT_NAME}' -v '${env.CI_BUILD_VERSION}'")
+					Powershell.run(sender: this, yyy: "${WORKSPACE}/.deploy/deploy.ps1")
 				}
 				stage ('publish') {
 					// this only will publish if the incominh branch IS develop
