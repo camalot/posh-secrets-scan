@@ -1,3 +1,3 @@
 #!/usr/bin/env pwsh
 
-Write-Host "Running Deploy...";
+Write-Debug "Running Deploy...";
